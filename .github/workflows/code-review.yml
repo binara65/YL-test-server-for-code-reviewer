@@ -1,0 +1,25 @@
+name: OpenAI Code Review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run OpenAI Code Review
+        uses: sshnaidm/gpt-code-review-action@v1.0
+        with:
+          openai-key: ${{ secrets.OPENAI_API_KEY }}
+          # model: 'gpt-4'
+          # prompt: 'Only suggest performance improvements for this code.'
+          # post-if-error: false
